@@ -1,0 +1,23 @@
+{
+  "name": "team-profile-generator",
+  "version": "1.0.0",
+  "description": "Generates a profile webpage for a software engineering team based on user input.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/binderb/team-profile-generator.git"
+  },
+  "author": "binderb",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/binderb/team-profile-generator/issues"
+  },
+  "homepage": "https://github.com/binderb/team-profile-generator#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4",
+    "jest": "^29.2.2"
+  }
+}
