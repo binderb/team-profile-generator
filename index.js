@@ -28,6 +28,12 @@ async function prompt_pick_member_type() {
     case 'Manager':
       await prompt_add_manager();
       break;
+    case 'Engineer':
+      await prompt_add_engineer();
+      break;
+    case 'Intern':
+      await prompt_add_intern();
+      break;
     default:
       await prompt_cancel();
   }
@@ -36,7 +42,12 @@ async function prompt_pick_member_type() {
 async function prompt_cancel () {
   console.log('Here is your team so far.');
   for (const teammate of team) {
-    console.log(`${teammate.getRole()} - ${teammate.name}`);
+    const spaces = '        '.slice(teammate.getRole().length-1);
+    let text_color = '\x1b[0m';
+    if (teammate.getRole() == 'Manager') text_color = '\x1b[31m'; 
+    if (teammate.getRole() == 'Engineer') text_color = '\x1b[32m'; 
+    if (teammate.getRole() == 'Intern') text_color = '\x1b[35m'; 
+    console.log(`  \u00B7 ${text_color}${teammate.getRole()}\x1b[0m${spaces}- \x1b[33m${teammate.name}\x1b[0m`);
   }
   const data = await q.prompt([
     {
@@ -86,7 +97,75 @@ async function prompt_add_manager() {
   ]);
   const new_manager = new Manager(data.name,data.id,data.email,data.office);
   team.push(new_manager);
-  console.log(`Added new manager ${new_manager.name} to your team!`);
+  console.log(`Added new \x1b[31mmanager\x1b[0m \x1b[33m${new_manager.name}\x1b[0m to your team!`);
+  await prompt_pick_member_type();
+}
+
+async function prompt_add_engineer() {
+  console.log('Let\'s add some info about this engineer.');
+  const data = await q.prompt([
+    {
+      type: 'input',
+      message: 'Engineer name:',
+      name: 'name',
+      validate: confirmInputNonEmptyString
+    },
+    {
+      type: 'input',
+      message: 'Employee ID#:',
+      name: 'id',
+      validate: confirmInputNumber
+    },
+    {
+      type: 'input',
+      message: 'Engineer email:',
+      name: 'email',
+      validate: confirmInputEmail
+    },
+    {
+      type: 'input',
+      message: 'GitHub username:',
+      name: 'github',
+      validate: confirmInputNonEmptyString
+    }
+  ]);
+  const new_engineer = new Engineer(data.name,data.id,data.email,data.github);
+  team.push(new_engineer);
+  console.log(`Added new \x1b[32mengineer\x1b[0m \x1b[33m${new_engineer.name}\x1b[0m to your team!`);
+  await prompt_pick_member_type();
+}
+
+async function prompt_add_intern() {
+  console.log('Let\'s add some info about this intern.');
+  const data = await q.prompt([
+    {
+      type: 'input',
+      message: 'Intern name:',
+      name: 'name',
+      validate: confirmInputNonEmptyString
+    },
+    {
+      type: 'input',
+      message: 'Employee ID#:',
+      name: 'id',
+      validate: confirmInputNumber
+    },
+    {
+      type: 'input',
+      message: 'Intern email:',
+      name: 'email',
+      validate: confirmInputEmail
+    },
+    {
+      type: 'input',
+      message: 'School:',
+      name: 'school',
+      validate: confirmInputNonEmptyString
+    }
+  ]);
+  const new_intern = new Intern(data.name,data.id,data.email,data.school);
+  team.push(new_intern);
+  console.log(`Added new \x1b[35mintern\x1b[0m \x1b[33m${new_intern.name}\x1b[0m to your team!`);
   await prompt_pick_member_type();
 }
 
@@ -97,15 +176,21 @@ Input Validation Functions
 ------------------------------*/
 
 function confirmInputNonEmptyString (input) {
-  return true;
+  if (input.trim() !== '') return true;
+  else return 'You must provide an answer here.';
 }
 
 function confirmInputNumber (input) {
-  return true;
+  if (!isNaN(parseInt(input)) && parseInt(input) > 0) return true;
+  else return 'You must provide a positive integer value.';
 }
 
 function confirmInputEmail (input) {
-  return true;
+  if (input.includes('@') 
+  && input.includes('.') 
+  && input.indexOf('@') < input.indexOf('.')
+  && input.indexOf('.') < input.length-1) return true;
+  else return 'You must provide a properly-formatted email address.';
 }
 
 // Start the program
