@@ -11,7 +11,7 @@ describe('Intern', () => {
     expect(new_intern.school).toEqual('St. Olaf');
   });
   describe('getName', () => {
-    it('Method should return the initialized employee name.', () => {
+    it('Method should return the employee name.', () => {
       // arrange and act
       const new_intern = new Intern('Ben',8,'ben@example.com','St. Olaf');
       // assert
@@ -19,7 +19,7 @@ describe('Intern', () => {
     });
   });
   describe('getId', () => {
-    it('Method should return the initialized employee id.', () => {
+    it('Method should return the employee id.', () => {
       // arrange and act
       const new_intern = new Intern('Ben',8,'ben@example.com','St. Olaf');
       // assert
@@ -27,7 +27,7 @@ describe('Intern', () => {
     });
   });
   describe('getEmail', () => {
-    it('Method should return the initialized employee email.', () => {
+    it('Method should return the employee email.', () => {
       // arrange and act
       const new_intern = new Intern('Ben',8,'ben@example.com','St. Olaf');
       // assert
@@ -35,7 +35,7 @@ describe('Intern', () => {
     });
   });
   describe('getRole', () => {
-    it('Method should return the initialized employee role.', () => {
+    it('Method should return the employee role.', () => {
       // arrange and act
       const new_intern = new Intern('Ben',8,'ben@example.com','St. Olaf');
       // assert
@@ -43,7 +43,7 @@ describe('Intern', () => {
     });
   });
   describe('getSchool', () => {
-    it('Method should return the initialized employee school.', () => {
+    it('Method should return the employee school.', () => {
       // arrange and act
       const new_intern = new Intern('Ben',8,'ben@example.com','St. Olaf');
       // assert

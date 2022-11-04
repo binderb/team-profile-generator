@@ -11,7 +11,7 @@ describe('Manager', () => {
     expect(new_manager.officeNumber).toEqual(42);
   });
   describe('getName', () => {
-    it('Method should return the initialized employee name.', () => {
+    it('Method should return the employee name.', () => {
       // arrange and act
       const new_manager = new Manager('Ben',8,'ben@example.com',42);
       // assert
@@ -19,7 +19,7 @@ describe('Manager', () => {
     });
   });
   describe('getId', () => {
-    it('Method should return the initialized employee id.', () => {
+    it('Method should return the employee id.', () => {
       // arrange and act
       const new_manager = new Manager('Ben',8,'ben@example.com',42);
       // assert
@@ -27,7 +27,7 @@ describe('Manager', () => {
     });
   });
   describe('getEmail', () => {
-    it('Method should return the initialized employee email.', () => {
+    it('Method should return the employee email.', () => {
       // arrange and act
       const new_manager = new Manager('Ben',8,'ben@example.com',42);
       // assert
@@ -35,7 +35,7 @@ describe('Manager', () => {
     });
   });
   describe('getRole', () => {
-    it('Method should return the initialized employee role.', () => {
+    it('Method should return the employee role.', () => {
       // arrange and act
       const new_manager = new Manager('Ben',8,'ben@example.com',42);
       // assert
