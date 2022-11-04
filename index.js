@@ -20,7 +20,7 @@ async function prompt_pick_member_type() {
     {
       type: 'list',
       message: 'Pick a team member to add:',
-      choices: ['Manager','Engineer','Intern','<cancel>'],
+      choices: ['Manager','Engineer','Intern','(Done)'],
       name: 'role'
     },
   ]);
@@ -40,26 +40,30 @@ async function prompt_pick_member_type() {
 };
 
 async function prompt_cancel () {
-  console.log('Here is your team so far.');
-  for (const teammate of team) {
-    const spaces = '        '.slice(teammate.getRole().length-1);
-    let text_color = '\x1b[0m';
-    if (teammate.getRole() == 'Manager') text_color = '\x1b[31m'; 
-    if (teammate.getRole() == 'Engineer') text_color = '\x1b[32m'; 
-    if (teammate.getRole() == 'Intern') text_color = '\x1b[35m'; 
-    console.log(`  \u00B7 ${text_color}${teammate.getRole()}\x1b[0m${spaces}- \x1b[33m${teammate.name}\x1b[0m`);
-  }
-  const data = await q.prompt([
-    {
-      type: 'confirm',
-      message: 'Are you done entering your team info?',
-      name: 'done'
+  if (team.length > 0) {
+    console.log('Here is your team so far.');
+    for (const teammate of team) {
+      const spaces = '        '.slice(teammate.getRole().length-1);
+      let text_color = '\x1b[0m';
+      if (teammate.getRole() == 'Manager') text_color = '\x1b[31m'; 
+      if (teammate.getRole() == 'Engineer') text_color = '\x1b[32m'; 
+      if (teammate.getRole() == 'Intern') text_color = '\x1b[35m'; 
+      console.log(`  \u00B7 ${text_color}${teammate.getRole()}\x1b[0m${spaces}- \x1b[33m${teammate.name}\x1b[0m`);
     }
-  ]);
-  if (data.done) {
-    console.log('finished!');
+    const data = await q.prompt([
+      {
+        type: 'confirm',
+        message: 'Are you done entering your team info?',
+        name: 'done'
+      }
+    ]);
+    if (data.done) {
+      console.log('finished!');
+    } else {
+      await prompt_pick_member_type();
+    }
   } else {
-    await prompt_pick_member_type();
+    console.log('No team members have been added. Exiting program.');
   }
 }
 
