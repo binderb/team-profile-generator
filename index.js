@@ -1,3 +1,4 @@
+const fs = require('fs');
 const q = require('inquirer');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
@@ -35,11 +36,11 @@ async function prompt_pick_member_type() {
       await prompt_add_intern();
       break;
     default:
-      await prompt_cancel();
+      await prompt_done();
   }
 };
 
-async function prompt_cancel () {
+async function prompt_done () {
   if (team.length > 0) {
     console.log('Here is your team so far.');
     for (const teammate of team) {
@@ -58,13 +59,75 @@ async function prompt_cancel () {
       }
     ]);
     if (data.done) {
-      console.log('finished!');
+      await prompt_confirm_page();
     } else {
       await prompt_pick_member_type();
     }
   } else {
-    console.log('No team members have been added. Exiting program.');
+    await prompt_quit();
   }
+}
+
+async function prompt_quit() {
+  if (team.length > 0) console.log('The data you entered will be lost if you quit now.');
+  else console.log('You haven\'t added any team members.');
+  const data = await q.prompt([
+    {
+      type: 'confirm',
+      message: 'End program without making a profile page?',
+      name: 'quit'
+    }
+  ]);
+  if (data.quit) {
+    console.log('Exiting program. Have a nice day!');
+  } else {
+    await prompt_pick_member_type();
+  }
+}
+
+async function prompt_confirm_page() {
+  const data = await q.prompt([
+    {
+      type: 'confirm',
+      message: 'Generate profile page?',
+      name: 'make'
+    }
+  ]);
+  if (data.make) {
+    generate_page();
+  } else {
+    await prompt_quit();
+  }
+}
+
+
+/*------------------------------
+Page Generation
+------------------------------*/
+
+function generate_page() {
+  console.log('Generating page...');
+  let template = fs.readFileSync('./src/page_template.html','utf8');
+  const blocks = [];
+  for (teammate of team) {
+    switch (teammate.getRole()) {
+      case 'Manager':
+        let manager_block = fs.readFileSync('./src/manager_block.html','utf8');
+        manager_block = manager_block.replace('manager_name',teammate.name);
+        manager_block = manager_block.replace('manager_id',teammate.id);
+        manager_block = manager_block.replace('manager_email',teammate.email);
+        manager_block = manager_block.replace('manager_office',teammate.id);
+        blocks.push(manager_block);
+        break;
+      default:
+    }
+  }
+  template = template.replace('content_hook',blocks.join('\n'));
+
+  fs.writeFile('./dist/index.html',template,(err) => {
+    console.log(err ? err : 'Success!');
+  });
+
 }
 
 /*------------------------------
