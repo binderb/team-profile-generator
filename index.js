@@ -115,9 +115,25 @@ function generate_page() {
         let manager_block = fs.readFileSync('./src/manager_block.html','utf8');
         manager_block = manager_block.replace('manager_name',teammate.name);
         manager_block = manager_block.replace('manager_id',teammate.id);
-        manager_block = manager_block.replace('manager_email',teammate.email);
-        manager_block = manager_block.replace('manager_office',teammate.id);
+        manager_block = manager_block.replaceAll('manager_email',teammate.email);
+        manager_block = manager_block.replace('manager_office',teammate.office);
         blocks.push(manager_block);
+        break;
+      case 'Engineer':
+        let engineer_block = fs.readFileSync('./src/engineer_block.html','utf8');
+        engineer_block = engineer_block.replace('engineer_name',teammate.name);
+        engineer_block = engineer_block.replace('engineer_id',teammate.id);
+        engineer_block = engineer_block.replaceAll('engineer_email',teammate.email);
+        engineer_block = engineer_block.replaceAll('engineer_github',teammate.github);
+        blocks.push(engineer_block);
+        break;
+      case 'Intern':
+        let intern_block = fs.readFileSync('./src/intern_block.html','utf8');
+        intern_block = intern_block.replace('intern_name',teammate.name);
+        intern_block = intern_block.replace('intern_id',teammate.id);
+        intern_block = intern_block.replaceAll('intern_email',teammate.email);
+        intern_block = intern_block.replace('intern_school',teammate.school);
+        blocks.push(intern_block);
         break;
       default:
     }
