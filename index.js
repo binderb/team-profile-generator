@@ -20,18 +20,18 @@ async function prompt_pick_member_type() {
     {
       type: 'list',
       message: 'Pick a team member to add:',
-      choices: ['Manager','Engineer','Intern','(Done)'],
+      choices: ['\x1b[31mManager\x1b[0m','\x1b[32mEngineer\x1b[0m','\x1b[35mIntern\x1b[0m','(Done)'],
       name: 'role'
     },
   ]);
   switch(data.role) {
-    case 'Manager':
+    case '\x1b[31mManager\x1b[0m':
       await prompt_add_manager();
       break;
-    case 'Engineer':
+    case '\x1b[32mEngineer\x1b[0m':
       await prompt_add_engineer();
       break;
-    case 'Intern':
+    case '\x1b[35mIntern\x1b[0m':
       await prompt_add_intern();
       break;
     default:
