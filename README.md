@@ -22,7 +22,7 @@ Follow the command line prompts to generate your team, and select `(done)` from 
 
 Check out the **index.html** file that is already included in the **dist** directory for an example of generated output.
 
-<!-- A video walkthrough of the application can be viewed [here](https://drive.google.com/file/d/1KiXuctmnk1V7pL4ObQDojWOima2nOpjA/view). -->
+🎥 A video walkthrough of the application can be viewed [here](https://drive.google.com/file/d/1AjZ6rPOEcBpVbnOYQ1P7Xe1s0V9dBJTX/view).
 
 ## Tests
 
