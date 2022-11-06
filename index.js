@@ -116,7 +116,7 @@ function generate_page() {
         manager_block = manager_block.replace('manager_name',teammate.name);
         manager_block = manager_block.replace('manager_id',teammate.id);
         manager_block = manager_block.replaceAll('manager_email',teammate.email);
-        manager_block = manager_block.replace('manager_office',teammate.office);
+        manager_block = manager_block.replace('manager_office',teammate.officeNumber);
         blocks.push(manager_block);
         break;
       case 'Engineer':
